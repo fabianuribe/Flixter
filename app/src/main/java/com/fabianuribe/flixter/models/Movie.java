@@ -19,8 +19,7 @@ public class Movie {
     public Movie(JSONObject jsonObject) throws JSONException {
         this.posterPath = jsonObject.getString("poster_path");
         this.originalTitle = jsonObject.getString("original_title");
-        this.overView = jsonObject.getString("original_title");
-
+        this.overView = jsonObject.getString("overview");
     }
 
     public static ArrayList<Movie> fromJsonArray(JSONArray array) {
@@ -38,7 +37,7 @@ public class Movie {
     }
 
     public String getPosterPath() {
-        return String.format("https://image.tmdb.org/t/p/%s", posterPath);
+        return String.format("https://image.tmdb.org/t/p/w185%s", posterPath);
     }
 
     public String getOriginalTitle() {
