@@ -1,6 +1,7 @@
 package com.fabianuribe.flixter;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
@@ -19,33 +20,49 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 public class MovieActivity extends AppCompatActivity {
+    private ListView lvItems;
     private ArrayList<Movie> movies;
     private MovieArrayAdapter movieAdapter;
     private SwipeRefreshLayout swipeContainer;
+    private static Parcelable lvState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
 
+        // Check for Saved States
+        if (savedInstanceState != null) {
+            lvState = savedInstanceState.getParcelable("lvScrollState");
+        }
+
+        movies = new ArrayList<>();
+        movieAdapter = new MovieArrayAdapter(this, movies);
+
+        lvItems = (ListView) findViewById(R.id.lvMovies);
+        lvItems.setAdapter(movieAdapter);
+
+        fetchMoviesAsync();
+
         // Set up Refresh Listener
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                // Clear the current ListView scroll position to avoid scrolling to it on refresh
+                lvState = null;
                 fetchMoviesAsync();
             }
         });
-
-        movies = new ArrayList<>();
-        movieAdapter = new MovieArrayAdapter(this, movies);
-
-        ListView lvItems;
-        lvItems = (ListView) findViewById(R.id.lvMovies);
-        lvItems.setAdapter(movieAdapter);
-
-        fetchMoviesAsync();
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the ListView current scroll position
+        savedInstanceState.putParcelable("lvScrollState", lvItems.onSaveInstanceState());
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
 
     private void fetchMoviesAsync() {
         AsyncHttpClient client = new AsyncHttpClient();
@@ -67,6 +84,11 @@ public class MovieActivity extends AppCompatActivity {
                     // Add all the Movie items
                     movies.addAll(Movie.fromJsonArray(movieJsonResults));
                     movieAdapter.notifyDataSetChanged();
+
+                    // Apply ListView scroll position if exists
+                    if (lvState != null) {
+                        lvItems.onRestoreInstanceState(lvState);
+                    }
 
                     // Remove refreshing animation
                     swipeContainer.setRefreshing(false);

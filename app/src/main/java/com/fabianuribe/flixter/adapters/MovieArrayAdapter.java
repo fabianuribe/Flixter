@@ -52,9 +52,12 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         Movie movie = getItem(position);
         if (movie != null) {
+            int orientation = getContext().getResources().getConfiguration().orientation;
             viewHolder.title.setText(movie.getOriginalTitle());
             viewHolder.overview.setText(movie.getOverView());
-            Picasso.with(getContext()).load(movie.getPosterPath()).fit().centerCrop()
+            Picasso.with(getContext()).load(movie.getListViewMovieImage(orientation))
+                    .fit()
+                    .centerCrop()
                     .placeholder(R.mipmap.ic_launcher)
                     .into(viewHolder.image);
         }
