@@ -19,18 +19,22 @@ import java.util.Date;
  */
 
 public class Movie implements Parcelable {
+    private String id;
     private String posterPath;
     private String originalTitle;
     private String overView;
     private String backdropPath;
     private String releaseDate;
+    private String youtubeTrailerSource;
 
     public Movie(JSONObject jsonObject) throws JSONException {
+        this.id = jsonObject.getString("id");
         this.posterPath = jsonObject.getString("poster_path");
         this.originalTitle = jsonObject.getString("original_title");
         this.overView = jsonObject.getString("overview");
         this.backdropPath = jsonObject.getString("backdrop_path");
         this.releaseDate = jsonObject.getString("release_date");
+        this.youtubeTrailerSource = null;
     }
 
     public static ArrayList<Movie> fromJsonArray(JSONArray array) {
@@ -46,6 +50,8 @@ public class Movie implements Parcelable {
 
         return results;
     }
+
+    public String getId() { return id; }
 
     public String getOriginalTitle() {
         return originalTitle;
@@ -85,6 +91,14 @@ public class Movie implements Parcelable {
         return year;
     }
 
+    public String getYoutubeTrailerSource() {
+        return youtubeTrailerSource;
+    }
+
+    public void setYoutubeTrailerSource(String youtubeTrailerSource) {
+        this.youtubeTrailerSource = youtubeTrailerSource;
+    }
+
     private Date parseDateString(String datestring) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD");
         java.util.Date parsedDate = null;
@@ -96,14 +110,17 @@ public class Movie implements Parcelable {
         return parsedDate;
     }
 
+
     // Parcelable implementation
     // ------------------------
     protected Movie(Parcel in) {
+        id = in.readString();
         posterPath = in.readString();
         originalTitle = in.readString();
         overView = in.readString();
         backdropPath = in.readString();
         releaseDate = in.readString();
+        youtubeTrailerSource = in.readString();
     }
 
     @Override
@@ -113,11 +130,13 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(posterPath);
         dest.writeString(originalTitle);
         dest.writeString(overView);
         dest.writeString(backdropPath);
         dest.writeString(releaseDate);
+        dest.writeString(youtubeTrailerSource);
     }
 
     @SuppressWarnings("unused")
