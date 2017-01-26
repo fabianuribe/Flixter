@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:clipChildren="false"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/ivMovieBackdrop"
+        android:layout_width="match_parent"
+        android:layout_height="158dp"
+        android:layout_weight="0.18"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="150dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:id="@+id/rlHeading"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:background="@color/colorPrimaryDark">
+
+            <ImageView
+                android:id="@+id/ivMoviePoster"
+                android:layout_width="110dp"
+                android:layout_height="250dp"
+                android:layout_weight="0.18"
+                android:layout_marginTop="-25dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="18dp"
+                android:scaleType="centerInside"
+                android:clipToPadding="false"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/tvHeadingMovieTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Movie Title"
+                android:layout_toRightOf="@+id/ivMoviePoster"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                style="@style/WhiteLargeFont"
+                />
+
+            <TextView
+                android:id="@+id/tvHeadingMovieYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="2016"
+                android:layout_toRightOf="@+id/ivMoviePoster"
+                android:layout_below="@+id/tvHeadingMovieTitle"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                style="@style/WhiteMediumFont"
+
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvMovieSynopsis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/rlHeading"
+            android:layout_marginTop="10dp"
+            tools:text="This is the plot of the movie in just a few words"
+            android:padding="18dp"
+            style="@style/DarkGreyMediumFont"
+            />
+    </LinearLayout>
+
+
+</FrameLayout>

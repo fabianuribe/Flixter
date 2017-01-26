@@ -1,9 +1,12 @@
 package com.fabianuribe.flixter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.fabianuribe.flixter.adapters.MovieArrayAdapter;
@@ -20,6 +23,8 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 public class MovieActivity extends AppCompatActivity {
+    private final int DETAIL_ACTIVIRY_REQUEST_CODE = 1;
+
     private ListView lvItems;
     private ArrayList<Movie> movies;
     private MovieArrayAdapter movieAdapter;
@@ -54,6 +59,8 @@ public class MovieActivity extends AppCompatActivity {
                 fetchMoviesAsync();
             }
         });
+
+        setupListViewListener();
     }
 
     @Override
@@ -97,5 +104,22 @@ public class MovieActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void setupListViewListener() {
+        lvItems.setOnItemClickListener(
+            new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapter, View view, int pos, long id) {
+                    Movie selectedMovie = movies.get(pos);
+                    Intent i = new Intent(MovieActivity.this, DetailActivity.class);
+
+                    i.putExtra("movie", selectedMovie);
+                    i.putExtra("moviePos", pos);
+
+                    startActivityForResult(i, DETAIL_ACTIVIRY_REQUEST_CODE);
+                }
+            }
+        );
     }
 }
