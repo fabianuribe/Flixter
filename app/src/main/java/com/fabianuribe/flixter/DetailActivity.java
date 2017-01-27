@@ -3,7 +3,6 @@ package com.fabianuribe.flixter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +29,7 @@ public class DetailActivity extends AppCompatActivity {
     private Movie movie;
     private ImageView ivMovieBackdrop ;
     private ImageView ivMoviePoster;
+    private ImageView ivPlayIcon;
     private String movieTrailerPath;
 
     @Override
@@ -46,6 +46,9 @@ public class DetailActivity extends AppCompatActivity {
         TextView tvHeadingMovieYear = (TextView) findViewById(R.id.tvHeadingMovieYear);
         tvHeadingMovieYear.setText(String.format("(%s)", movie.getReleaseYear()));
 
+        TextView tvMovieTitle = (TextView) findViewById(R.id.tvMovieTitle);
+        tvMovieTitle.setText(movie.getOriginalTitle());
+
         TextView tvMoviewSynopsis = (TextView) findViewById(R.id.tvMovieSynopsis);
         tvMoviewSynopsis.setText(movie.getOverView());
 
@@ -55,6 +58,8 @@ public class DetailActivity extends AppCompatActivity {
                 .centerCrop()
                 .placeholder(R.mipmap.ic_launcher)
                 .into(ivMovieBackdrop);
+
+        ivPlayIcon = (ImageView) findViewById(R.id.ivPlayIcon);
 
         ivMoviePoster = (ImageView) findViewById(R.id.ivMoviePoster);
         Picasso.with(getApplicationContext()).load(movie.getPosterPath())
@@ -69,7 +74,9 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setUpClickListeners() {
         if (movie.getYoutubeTrailerSource() == null) {
-          fetchYoutubeTrailer();
+            fetchYoutubeTrailer();
+        } else {
+            ivPlayIcon.setVisibility(View.VISIBLE);
         }
 
         ivMovieBackdrop.setOnClickListener(
@@ -108,7 +115,8 @@ public class DetailActivity extends AppCompatActivity {
                         String source = youtubeVideo.getString("source");
                         movie.setYoutubeTrailerSource(source);
 
-                        //TODO: Add play Icon
+                        // Make Play Icon visible
+                        ivPlayIcon.setVisibility(View.VISIBLE);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
