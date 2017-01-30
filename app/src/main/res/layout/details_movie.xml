@@ -101,13 +101,13 @@
 
             <TextView
                 android:id="@+id/tvMovieSynopsis"
-                style="@style/DarkGreyMediumFont"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/tvMovieTitle"
                 android:paddingLeft="18dp"
                 android:paddingRight="18dp"
                 android:paddingBottom="50dp"
+                android:textSize="17dp"
                 tools:text="This is the plot of the movie in just a few words" />
         </LinearLayout>
 

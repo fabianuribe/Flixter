@@ -56,7 +56,6 @@ public class DetailActivity extends AppCompatActivity {
         ivMovieBackdrop.setClickable(true);
         Picasso.with(getApplicationContext()).load(movie.getBackdropPath()).fit()
                 .centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
                 .into(ivMovieBackdrop);
 
         ivPlayIcon = (ImageView) findViewById(R.id.ivPlayIcon);
@@ -66,7 +65,6 @@ public class DetailActivity extends AppCompatActivity {
                 .transform(new RoundedCornersTransformation(10, 10))
                 .fit()
                 .centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
                 .into(ivMoviePoster);
 
         setUpClickListeners();

@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="#000">
+    android:background="@drawable/rounded_corner_white_rect"
+    android:layout_margin="10dp"
+    >
 
     <ImageView
         android:id="@+id/ivMovieImage"
@@ -35,22 +35,43 @@
             android:layout_alignParentBottom="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLines="3"
+            android:maxLines="2"
             android:scrollHorizontally="true"
-            android:text="TextView"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium"
-            android:textColor="#f2f2f2" />
+            android:text="The description of the movie"
+            android:textSize="16dp"
+            android:layout_marginBottom="3dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/llRating"
+            android:layout_above="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp"
+            >
+
+            <ImageView
+                android:id="@+id/ivStarIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/ic_star_black_24dp"
+                style="@style/DarkGreyFont"
+                />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_above="@+id/tvOverview"
-            android:layout_alignLeft="@+id/tvOverview"
-            android:layout_alignStart="@+id/tvOverview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
             android:textAppearance="@android:style/TextAppearance.Material.Title"
-            android:textColor="#fff" />
+            android:textSize="18dp"
+            />
 
     </RelativeLayout>
 

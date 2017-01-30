@@ -25,6 +25,7 @@ public class Movie implements Parcelable {
     private String overView;
     private String backdropPath;
     private String releaseDate;
+    private Integer stars;
     private String youtubeTrailerSource;
 
     public Movie(JSONObject jsonObject) throws JSONException {
@@ -34,6 +35,7 @@ public class Movie implements Parcelable {
         this.overView = jsonObject.getString("overview");
         this.backdropPath = jsonObject.getString("backdrop_path");
         this.releaseDate = jsonObject.getString("release_date");
+        this.stars = calculateStars(jsonObject.getDouble("vote_average"));
         this.youtubeTrailerSource = null;
     }
 
@@ -64,6 +66,8 @@ public class Movie implements Parcelable {
     public String getPosterPath() {
         return String.format("https://image.tmdb.org/t/p/w185%s", posterPath);
     }
+
+    public Integer getStars() { return stars; }
 
     public String getBackdropPath() {
         return String.format("https://image.tmdb.org/t/p/w780%s", backdropPath);
@@ -110,6 +114,15 @@ public class Movie implements Parcelable {
         return parsedDate;
     }
 
+    private Integer calculateStars(Double voteAverage) {
+        Integer stars = 0;
+        try {
+            stars = (int) Math.round((voteAverage/10)*5);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stars;
+    }
 
     // Parcelable implementation
     // ------------------------
@@ -120,6 +133,7 @@ public class Movie implements Parcelable {
         overView = in.readString();
         backdropPath = in.readString();
         releaseDate = in.readString();
+        stars = in.readInt();
         youtubeTrailerSource = in.readString();
     }
 
@@ -136,6 +150,7 @@ public class Movie implements Parcelable {
         dest.writeString(overView);
         dest.writeString(backdropPath);
         dest.writeString(releaseDate);
+        dest.writeInt(stars);
         dest.writeString(youtubeTrailerSource);
     }
 
